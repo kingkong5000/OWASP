@@ -1,0 +1,22 @@
+Cypress.Commands.add('login', (username, password) => {
+  cy.get('.mat-toolbar-row').find('#navbarAccount').click()
+  cy.get('#mat-menu-panel-0').find('button').click()
+  cy.get('#email').type(username)
+  cy.get('#password').type(password)
+  cy.get('#loginButton').click()
+})
+
+Cypress.Commands.add('register', (username, password, answer) => {
+  cy.visit(`${Cypress.env('OWASP_PROD')}`)
+  cy.get('#mat-dialog-0').find('[aria-label="Close Welcome Banner"]').click()
+  cy.get('.mat-toolbar-row').find('#navbarAccount').click()
+  cy.get('#mat-menu-panel-0').find('button').click()
+  cy.get('#newCustomerLink').click()
+  cy.get('#emailControl').type(username)
+  cy.get('#passwordControl').type(password)
+  cy.get('#repeatPasswordControl').type(password)
+  cy.get('[name="securityQuestion"]').click()
+  cy.get('#mat-option-11').contains('Your ZIP/postal code when you were a teenager?').click()
+  cy.get('#securityAnswerControl').type(answer)
+  cy.get('#registerButton').click()
+})
